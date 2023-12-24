@@ -11,12 +11,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    if: github.ref == 'refs/heads/main'
-
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
       - uses: actions/checkout@v2
 
@@ -46,7 +40,7 @@ jobs:
 
               # Now we have got the access of EC2 and we will start the deploy .
               cd /var/www/html &&
-              sudo npm i &&
-              sudo npm run build &&
-              sudo npm start
+              npm i &&
+              npm run build &&
+              npm start
               '

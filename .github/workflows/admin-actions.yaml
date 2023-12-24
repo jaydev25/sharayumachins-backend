@@ -39,6 +39,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/html
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh      
             sudo npm i
             sudo npm run build
             sudo npm start

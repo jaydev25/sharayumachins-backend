@@ -43,7 +43,6 @@ jobs:
             source ~/.nvm/nvm.sh      
             npm i
             npm run build
-            pm2 run start
       
       # - name: Build & Deploy
       #   env:

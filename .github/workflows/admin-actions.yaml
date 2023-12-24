@@ -28,22 +28,38 @@ jobs:
           remote_user: ubuntu
           remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
       
-      - name: Build & Deploy
-        env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-            HOSTNAME: ${{secrets.HOST_NAME}}
-            USER_NAME: ${{secrets.USER_NAME}}
+      - name: Node Js
+        uses: actions/setup-node@v1
+        
+      - name: SSH and deploy node app
+        uses: appleboy/ssh-action@master        
+        with:
+          host: ${{ secrets.HOST_NAME }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html
+            sudo npm i
+            sudo npm run build
+            sudo npm start
+            service myservice restart
       
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+      # - name: Build & Deploy
+      #   env:
+      #       PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      #       HOSTNAME: ${{secrets.HOST_NAME}}
+      #       USER_NAME: ${{secrets.USER_NAME}}
+      
+      #   run: |
+      #     echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+      #     ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
 
-              # Now we have got the access of EC2 and we will start the deploy .
-              export NVM_DIR=~/.nvm
-              source ~/.nvm/nvm.sh
+      #         # Now we have got the access of EC2 and we will start the deploy .
+      #         export NVM_DIR=~/.nvm
+      #         source ~/.nvm/nvm.sh
 
-              cd /var/www/html &&
-              sudo npm i &&
-              sudo npm run build &&
-              sudo npm start
-              '
+      #         cd /var/www/html &&
+      #         sudo npm i &&
+      #         sudo npm run build &&
+      #         sudo npm start
+      #         '

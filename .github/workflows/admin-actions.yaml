@@ -44,6 +44,7 @@ jobs:
             npm i
             npm run build
             npm start
+            pm2 run start
             service myservice restart
       
       # - name: Build & Deploy

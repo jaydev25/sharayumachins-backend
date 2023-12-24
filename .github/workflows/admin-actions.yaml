@@ -41,9 +41,9 @@ jobs:
             cd /var/www/html
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh      
-            sudo npm i
-            sudo npm run build
-            sudo npm start
+            npm i
+            npm run build
+            npm start
             service myservice restart
       
       # - name: Build & Deploy

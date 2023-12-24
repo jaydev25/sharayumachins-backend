@@ -14,35 +14,35 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # - run: npm i
-      # - run: npm run build
-      # - run: npm run test
+      - name: Node Js
+        uses: actions/setup-node@v1
+        
+      - run: npm i
+      - run: npm run build
+      - run: npm run test
 
       - name: rsync deployments
         uses: burnett01/rsync-deployments@5.1
         with:
           switches: -avzr --delete
           path: ./*
-          remote_path: /var/www/html/
+          remote_path: /var/www/html/admin/
           remote_host: 15.206.49.180
           remote_user: ubuntu
           remote_key: "${{ secrets.SSH_PRIVATE_KEY }}"
       
-      - name: Node Js
-        uses: actions/setup-node@v1
-        
-      - name: SSH and deploy node app
-        uses: appleboy/ssh-action@master        
-        with:
-          host: ${{ secrets.HOST_NAME }}
-          username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/html
-            export NVM_DIR=~/.nvm
-            source ~/.nvm/nvm.sh      
-            npm i
-            npm run build
+      # - name: SSH and deploy node app
+      #   uses: appleboy/ssh-action@master        
+      #   with:
+      #     host: ${{ secrets.HOST_NAME }}
+      #     username: ${{ secrets.USER_NAME }}
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd /var/www/html
+      #       export NVM_DIR=~/.nvm
+      #       source ~/.nvm/nvm.sh      
+      #       npm i
+      #       npm run build
       
       # - name: Build & Deploy
       #   env:

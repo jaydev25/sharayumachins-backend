@@ -32,6 +32,7 @@ const DATABASE_URL =
   process.env.DATABASE_URL || "postgres://localhost/medusa-starter-default";
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const UPLOAD_BACKEND_URL = process.env.UPLOAD_BACKEND_URL || "http://localhost:9000";
 
 const plugins = [
   `medusa-fulfillment-manual`,
@@ -40,6 +41,7 @@ const plugins = [
     resolve: `@medusajs/file-local`,
     options: {
       upload_dir: "uploads",
+      backend_url: UPLOAD_BACKEND_URL
     },
   },
   {
